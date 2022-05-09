@@ -12,7 +12,7 @@ from django.utils import timezone
 from .managers import CustomUserManager
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(('email address'), unique=True)
     name = models.CharField(max_length=100,blank=False,null=False)
     phn_number = models.IntegerField(blank=False,null=False,default=0000000000)

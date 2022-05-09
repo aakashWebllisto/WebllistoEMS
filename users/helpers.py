@@ -2,7 +2,7 @@
 import smtplib
 # import getpass
 
-def sendMail(from_email,to,subject,message,pwd):
+def sendMail(to,subject,message,pwd):
 
     
     smtp_obj = smtplib.SMTP("smtp.gmail.com",587)
