@@ -13,7 +13,7 @@ def Homepage(request):
         if form.is_valid():
             form.save()
             return HttpResponse('Form Submitted')    
-        return render(request,'users/home.html',{'form':UserForm()})
+        return render(request,'users/login.html',{'form':UserForm()})
             
     else:
         form = UserForm()
