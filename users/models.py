@@ -9,6 +9,7 @@ from .managers import CustomUserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(('email address'), unique=True)
+    password = models.CharField(max_length=50)
     name = models.CharField(max_length=100,blank=False,null=False)
     phn_number = models.IntegerField(blank=False,null=False,default=0000000000)
     image = models.ImageField(upload_to='images/')
