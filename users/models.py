@@ -15,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     image = models.ImageField(upload_to='images/')
     residential_address = models.TextField(max_length=600,blank=False,null=False)
     current_address = models.TextField(max_length=600,blank=False,null=False)
-    reporting_manager = models.ManyToManyField("self", symmetrical=False)
+    reporting_manager = models.ManyToManyField("self", symmetrical=False,null=True,blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
