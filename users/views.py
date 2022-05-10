@@ -9,10 +9,11 @@ from .forms import UserForm
 def Homepage(request):
     if request.method == "POST":
         
-        form = UserForm(request.POST)
+        form = UserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponse('Form Submitted')    
+            return HttpResponse('Form Submitted')  
+        print(form.errors.as_data())  
         return render(request,'users/login.html',{'form':UserForm()})
             
     else:
