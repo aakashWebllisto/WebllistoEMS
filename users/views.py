@@ -7,20 +7,14 @@ from .forms import UserForm
 
 
 def Homepage(request):
-    if request.method == "GET":
+    if request.method == "POST":
         
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Form Submitted')    
+        return render(request,'users/home.html',{'form':UserForm()})
+            
+    else:
         form = UserForm()
         return render(request,'users/login.html',{'form':form})
-    else:
-        form = request.POST
-        if form.is_valid():
-            cd = form.cleaned_data
-            name = cd.get('name')
-            email = cd.get('email')
-            password = cd.get('password')
-            phn = cd.get('phn')
-            resAdd = cd.get('resAdd')
-            curAdd = cd.get('curAdd')
-            img = cd.get('img[]')
-            print(name)
-            

@@ -2,15 +2,20 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import User
 
-class UserForm(forms.Form):
+class UserForm(forms.ModelForm):
     
-    name = forms.CharField(max_length = 200)
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput())
-    phn_number = forms.IntegerField()
-    ResidentialAddress = forms.CharField(widget=forms.Textarea())
-    CurrentAddress = forms.CharField(widget=forms.Textarea())
-    image = forms.ImageField()
+    # name = forms.CharField(max_length = 200)
+    # email = forms.EmailField()
+    # password = forms.CharField(widget=forms.PasswordInput())
+    # phn_number = forms.IntegerField()
+    # ResidentialAddress = forms.CharField(widget=forms.Textarea())
+    # CurrentAddress = forms.CharField(widget=forms.Textarea())
+    # image = forms.ImageField()
+
+    class Meta:
+
+        model = User
+        fields = ['email','password','name','phn_number','residential_address','current_address','image']
 
         
         
