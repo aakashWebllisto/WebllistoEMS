@@ -19,10 +19,12 @@ from django.conf.urls.static import static
 
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
 urlpatterns = [
+    path('', include('users.urls')),
     path('admin/', admin.site.urls),
+    # path('users/', admin.site.urls),
 ]
 if settings.DEBUG:
         urlpatterns += static(settings.MEDIA_URL,
