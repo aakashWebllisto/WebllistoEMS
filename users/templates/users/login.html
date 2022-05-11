@@ -49,7 +49,37 @@
 <div class="container">
   <form method="POST" action="" enctype= "multipart/form-data">
     {% csrf_token %}
-    {{form.as_p}}
+    
+    <table>
+      <tr>
+        <td>{{form.email.label_tag}}</td>
+        <td>{{form.email}}</td>
+      </tr>
+      <tr>
+        <td>{{form.password.label_tag}}</td>
+        <td>{{form.password}}</td>
+      </tr>
+      <tr>
+        <td>{{form.name.label_tag}}</td>
+        <td>{{form.name}}</td>
+      </tr>
+      <tr>
+        <td>{{form.phn_number.label_tag}}</td>
+        <td>{{form.phn_number}}</td>
+      </tr>
+      <tr>
+        <td>{{form.residential_address.label_tag}}</td>
+        <td>{{form.residential_address}}</td>
+      </tr>
+      <tr>
+        <td>{{form.current_address.label_tag}}</td>
+        <td>{{form.current_address}}</td>
+      </tr>
+      <tr>
+        <td>{{form.image.label_tag}}</td>
+        <td>{{form.image}}</td>
+      </tr>
+    </table>
     
   <button type="submit" class="btn btn-primary">Submit</button>
 
