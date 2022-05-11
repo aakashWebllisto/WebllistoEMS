@@ -11,4 +11,6 @@ class UserForm(forms.ModelForm):
         fields = ['email','password','name','phn_number','residential_address','current_address','image']
 
         
-        
+class LoginForm(forms.Form):
+    email = forms.EmailField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
