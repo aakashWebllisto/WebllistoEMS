@@ -5,6 +5,8 @@ from django.conf  import settings
 from django.core.mail import send_mail,EmailMultiAlternatives
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from django.http import HttpResponseRedirect
+
 # Create your views here.
 
 
@@ -12,9 +14,10 @@ def Homepage(request):
     if request.method == "POST":
         
         form = UserForm(request.POST, request.FILES)
+
         if form.is_valid():
             form2 = form.save()
-            form2.set_password(form.password)
+            form2.set_password(form.cleaned_data['password'])
             form2.save()
             subject = "Webllisto EMS User Registration"
             from_email = settings.EMAIL_HOST_USER
@@ -24,7 +27,7 @@ def Homepage(request):
             msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
-            return HttpResponse('Form Submitted')  
+            return HttpResponse('Form Submitted')
         print(form.errors.as_data())  
         return render(request,'users/home.html',{'form':UserForm()})
             
