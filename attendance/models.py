@@ -1,5 +1,5 @@
 import datetime
-
+from users.models import User
 from django.db import models
 # from users.apps.UsersConfig import models.User
 

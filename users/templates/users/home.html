@@ -1,6 +1,7 @@
+
 <!DOCTYPE HTML>
 <html lang="en">
-
+{% load static %}
 <head>
 
 <!-- Required meta tags -->
@@ -33,15 +34,21 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Admin</a>
               </li>
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="logout">Logout</a>
-              </li>
-              {% else %}
-              <li class="nav-item">
-                <a class="nav-link" href="login">Login</a>
-              </li>
-              {% endif %}
+
+<!--              {% if user.is_authenticated %}-->
+<!--              <li class="nav-item">-->
+<!--                <a class="nav-link" href="logout">Logout</a>-->
+<!--              </li>-->
+<!--              {% else %}-->
+<!--              <li class="nav-item">-->
+<!--                <a class="nav-link" href="login">Login</a>-->
+<!--              </li>-->
+<!--              {% endif %}-->
+
+              <li class="nav-item me-auto">
+                <a class="navbar-brand" href="{% if user.is_authenticated %}logout{% else %}login{% endif %}"><img src="{% static 'users/enter.png' %}"
+                                     width=35 height=35/></a>
+                </li>
             </ul>
             
           </div>
@@ -52,9 +59,9 @@
 
 </div>
 {% if user.is_authenticated and user.email == 'aakash1avp@yahoo.com'%}
-    <div class="">
-      <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
-    </div>
+<!--    <div class="">-->
+<!--      <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>-->
+<!--    </div>-->
 
 
     <div class="container">
