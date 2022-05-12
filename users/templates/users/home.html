@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">    
+</head>
+
+<body>
+
+<div class="container-fluid">
+    
+    <!-- NAVIGATION BAR -->
+
+
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">WebllistoEMS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Admin</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>              
+            </ul>
+            
+          </div>
+        </div>
+      </nav> 
+
+    <!-- END OF NAVIGATION BAR -->
+
+</div>
+{% if user.is_authenticated and user.email == 'aakash1avp@yahoo.com'%}
+    <div class="">
+      <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
+    </div>
+
+    <div class="container">
+      <form method="POST" action="" enctype= "multipart/form-data">
+        {% csrf_token %}
+        
+        <table class="table table-striped">
+          <tr>
+            <td>{{form.email.label_tag}}</td>
+            <td>{{form.email}}</td>
+          </tr>
+          <tr>
+            <td>{{form.password.label_tag}}</td>
+            <td>{{form.password}}</td>
+          </tr>
+          <tr>
+            <td>{{form.name.label_tag}}</td>
+            <td>{{form.name}}</td>
+          </tr>
+          <tr>
+            <td>{{form.phn_number.label_tag}}</td>
+            <td>{{form.phn_number}}</td>
+          </tr>
+          <tr>
+            <td>{{form.residential_address.label_tag}}</td>
+            <td>{{form.residential_address}}</td>
+          </tr>
+          <tr>
+            <td>{{form.current_address.label_tag}}</td>
+            <td>{{form.current_address}}</td>
+          </tr>
+          <tr>
+            <td>{{form.image.label_tag}}</td>
+            <td>{{form.image}}</td>
+          </tr>
+        </table>
+        
+      <button type="submit" class="btn btn-primary">Submit</button>
+    
+      </form>
+    </div>
+    
+{% else %}
+    <p>Welcome, new user. Please log in.</p>
+{% endif %}
+
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
+
+

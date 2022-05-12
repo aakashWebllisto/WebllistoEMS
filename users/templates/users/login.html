@@ -1,0 +1,26 @@
+<div class="container">
+    <h1>Login</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <table class="table-striped">
+      <!-- {{ login_form }} -->
+      
+      <tr>
+          <td>{{login_form.email.label_tag}}</td>
+          <td>{{login_form.email}}</td>
+      </tr>
+      
+      
+      <tr>
+        <td>{{login_form.password.label_tag}}</td>
+        <td>{{login_form.password}}</td>
+      </tr>
+  
+</table>
+<button class="btn btn-primary" type="submit">Login</button>
+    </form>
+    
+  </div>
+
+
+  
