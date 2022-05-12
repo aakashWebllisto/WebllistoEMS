@@ -33,9 +33,15 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Admin</a>
               </li>
+              {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li>              
+                <a class="nav-link" href="logout">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="login">Login</a>
+              </li>
+              {% endif %}
             </ul>
             
           </div>
@@ -49,6 +55,7 @@
     <div class="">
       <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
     </div>
+
 
     <div class="container">
       <form method="POST" action="" enctype= "multipart/form-data">

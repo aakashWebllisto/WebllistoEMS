@@ -2,7 +2,7 @@
     <h1>Login</h1>
     <form method="POST">
       {% csrf_token %}
-      <table class="table-striped">
+      <table class="table table-striped">
       <!-- {{ login_form }} -->
       
       <tr>
@@ -16,8 +16,8 @@
         <td>{{login_form.password}}</td>
       </tr>
   
-</table>
-<button class="btn btn-primary" type="submit">Login</button>
+      </table>
+      <button class="btn btn-primary" type="submit">Login</button>
     </form>
     
   </div>
