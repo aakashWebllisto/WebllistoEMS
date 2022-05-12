@@ -34,17 +34,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Attendance(models.Model):
-    email = models.EmailField(('email address'))
-    date = models.DateTimeField()
-    timestamp_in = models.TimeField()
-    timestamp_out = models.TimeField()
-    rm_approval = models.BooleanField(default=False)
-    leave_application = models.BooleanField(default=False)
-    leave_application_approval = models.BooleanField(default=False)
-    timing_duration = models.TimeField()
-
-
-    def save(self, *args, **kwargs):
-        self.timing_duration = self.timestamp_out - self.timestamp_in 
-        super(Attendance, self).save(*args, **kwargs) # Call the "real" save() method.
+# class Attendance(models.Model):
+#     email = models.EmailField(('email address'))
+#     date = models.DateTimeField()
+#     timestamp_in = models.TimeField()
+#     timestamp_out = models.TimeField()
+#     # rm_approval = models.BooleanField(default=False)
+#     leave_application = models.BooleanField(default=False)
+#     leave_application_approval = models.BooleanField(default=False)#initial pending
+#     # reason,mail to hr, cc to rm,to user as well
+#     timing_duration = models.TimeField()
+#
+#
+#     def save(self, *args, **kwargs):
+#         self.timing_duration = self.timestamp_out - self.timestamp_in
+#         super(Attendance, self).save(*args, **kwargs) # Call the "real" save() method.
