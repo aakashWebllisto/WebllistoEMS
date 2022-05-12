@@ -8,12 +8,16 @@ from .managers import CustomUserManager
 from django.contrib.auth.hashers import make_password, check_password
 
 
+def upload_location(instance, filename):
+    return "uploads/%s/img/%s" % (instance.email, filename)
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(('email address'), unique=True)
     password = models.CharField(max_length=50)
     name = models.CharField(max_length=100,blank=False,null=False)
     phn_number = models.IntegerField(blank=False,null=False,default=9999999999)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to=upload_location)
     residential_address = models.TextField(max_length=600,blank=False,null=False)
     current_address = models.TextField(max_length=600,blank=False,null=False)
     reporting_manager = models.ManyToManyField("self", symmetrical=False,blank=True)
