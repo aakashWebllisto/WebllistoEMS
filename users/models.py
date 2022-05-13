@@ -14,7 +14,7 @@ def upload_location(instance, filename):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(('email address'), unique=True)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=150)
     name = models.CharField(max_length=100,blank=False,null=False)
     phn_number = models.IntegerField(blank=False,null=False,default=9999999999)
     image = models.ImageField(upload_to=upload_location)

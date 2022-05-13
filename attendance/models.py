@@ -1,21 +1,23 @@
 import datetime
 # from .users.models import User
 from django.db import models
-# from users.apps.UsersConfig import models.User
+from users.models import User
+from django.utils.timezone import now
 
 
 class Attendance(models.Model):
     email = models.EmailField()
-    date = models.DateTimeField(default=datetime.date.today(),blank=False,null=False)
-    timestamp_in = models.TimeField(default=datetime.time(),blank=False,null=False)
-    timestamp_out = models.TimeField(blank=False,null=False)
-    timing_duration = models.TimeField()
-    # user = models.OneToOneField(User)
+    date = models.DateTimeField(default=now(), blank=True)
+    timestamp_in = models.TimeField(blank=False)
+    timestamp_out = models.TimeField(blank=True)
+    timing_duration = models.TimeField(blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        self.timing_duration = self.timestamp_out - self.timestamp_in
-        super(Attendance, self).save(*args, **kwargs)  # Call the "real" save() method.
+        if self.timestamp_out:
+            self.timing_duration = self.timestamp_out - self.timestamp_in
 
+        super(Attendance, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 # class Leaves(models.model):
 #     rm_approval = models.BooleanField(default=False)
