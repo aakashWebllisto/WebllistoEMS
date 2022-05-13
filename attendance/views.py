@@ -1,16 +1,14 @@
 from django.http import HttpResponse
 from.forms import AttendanceFormSignIn,AttendanceFormSignOut
+from django.shortcuts import render
 # Create your views here.
 
-def homepage(request):
-    return HttpResponse("AttendancePage")
+def attendance(request):
+    return render(request, 'attendance/attendance.html')
 
 def signin_view(request):
-    if request.method == "POST":
-        form = AttendanceFormSignIn()
-        if form.is_valid():
-            pass
-    return HttpResponse("SignIn ")
+    pass
+
 
 def signout_view(request):
     return HttpResponse("SinOut")

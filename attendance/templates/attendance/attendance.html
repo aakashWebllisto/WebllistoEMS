@@ -1,0 +1,21 @@
+{% extends "attendance/base.html" %}
+
+{% if user.is_authenticated %}
+    <p>Welcome to the attendance page</p>
+{% else %}
+  <p>Please login</p>
+{% endif %}
+
+
+{% block content %}
+    <div class="container">
+      <form method="POST" action="">
+        {% csrf_token %}
+
+
+
+      <a href="/attendance"><button type="submit" class="btn btn-primary">{% if request.user %}Signout {% else %}Signin{% endif %}</button></a>
+
+      </form>
+    </div>
+{% endblock content %}

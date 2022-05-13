@@ -3,20 +3,12 @@ from django import forms
 from .models import Attendance
 
 
-class AttendanceFormSignIn(forms.ModelForm):
-    # password = forms.CharField(widget=forms.PasswordInput)
-
-    class Meta:
-        model = Attendance
-        fields = ['timestamp_in']
+class AttendanceFormSignIn(forms.Form):
+    pass
 
 
 class AttendanceFormSignOut(forms.ModelForm):
-    # password = forms.CharField(widget=forms.PasswordInput)
-
-    class Meta:
-        model = Attendance
-        fields = ['timestamp_out']
+    pass
 
 
 class LoginForm(forms.Form):
