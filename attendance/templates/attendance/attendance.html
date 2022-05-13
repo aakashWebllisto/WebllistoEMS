@@ -13,8 +13,8 @@
         {% csrf_token %}
 
 
-
-      <a href="/attendance"><button type="submit" class="btn btn-primary">{% if request.user %}Signout {% else %}Signin{% endif %}</button></a>
+        {% if request.user %}Signout {% else %}Signin{% endif %}
+      <a href="/attendance"><button type="submit" class="btn btn-primary"></button></a>
 
       </form>
     </div>
