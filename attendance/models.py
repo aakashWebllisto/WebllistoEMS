@@ -1,5 +1,5 @@
 import datetime
-from users.models import User
+# from .users.models import User
 from django.db import models
 # from users.apps.UsersConfig import models.User
 
@@ -10,7 +10,7 @@ class Attendance(models.Model):
     timestamp_in = models.TimeField(default=datetime.time(),blank=False,null=False)
     timestamp_out = models.TimeField(blank=False,null=False)
     timing_duration = models.TimeField()
-    # user = models.ForeignKey(User)
+    # user = models.OneToOneField(User)
 
     def save(self, *args, **kwargs):
         self.timing_duration = self.timestamp_out - self.timestamp_in
