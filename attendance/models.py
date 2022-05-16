@@ -16,7 +16,7 @@ LOCALE_CHOICES = (
 class Attendance(models.Model):
     email = models.EmailField(blank=False, null=False)
     date = models.DateTimeField(default=datetime.date.today(), blank=False, null=False)
-    timestamp_in = models.DateTimeField(blank=False, null=False)
+    timestamp_in = models.DateTimeField(default=datetime.time(),blank=False, null=False)
     timestamp_out = models.DateTimeField(blank=True, null=True)
     timing_duration = models.CharField(max_length=200, blank=True, null=True)
     rm = models.OneToOneField(User, on_delete=models.CASCADE)

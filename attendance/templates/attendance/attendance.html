@@ -8,7 +8,7 @@
 
 {% if user.is_authenticated or request.user %}
 <p>Welcome to the attendance page</p>
-{% if signin %}
+{% if not signin %}
 <form method="POST" action="/attendance/signin">
     {% csrf_token %}
     {{form}}
