@@ -9,7 +9,7 @@ class Attendance(models.Model):
     email = models.EmailField(blank=False,null=False)
     date = models.DateTimeField(default=now(), blank=False,null = False)
     timestamp_in = models.TimeField(blank=False)
-    timestamp_out = models.TimeField(blank=True)
+    timestamp_out = models.TimeField(blank=True,null=True)
     timing_duration = models.TimeField(blank=True, null=True)
     rm = models.OneToOneField(User, on_delete=models.CASCADE)
 
