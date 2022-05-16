@@ -6,12 +6,12 @@ from django.utils.timezone import now
 
 
 class Attendance(models.Model):
-    email = models.EmailField()
-    date = models.DateTimeField(default=now(), blank=True)
+    email = models.EmailField(blank=False,null=False)
+    date = models.DateTimeField(default=now(), blank=False,null = False)
     timestamp_in = models.TimeField(blank=False)
     timestamp_out = models.TimeField(blank=True)
     timing_duration = models.TimeField(blank=True, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    rm = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if self.timestamp_out:

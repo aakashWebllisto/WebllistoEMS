@@ -8,14 +8,28 @@
 
 
 {% block content %}
-    <div class="container">
-      <form method="POST" action="">
-        {% csrf_token %}
+{{user}}
+{% if user.is_authenticated %}
+    <p>Welcome to the attendance page</p>
+    {% if signin %}
+        <div class="container">
+          <form method="POST" action="/attendance/signout">
+           {% csrf_token %}
+
+          <button type="submit" name="session" class="btn btn-primary">SignOut</button>
+          </form>
+        </div>
+    {% else %}
 
 
-        {% if request.user %}Signout {% else %}Signin{% endif %}
-      <a href="/attendance"><button type="submit" class="btn btn-primary"></button></a>
+        <div class="container">
+          <form method="POST" action="/attendance/signin">
+           {% csrf_token %}
 
-      </form>
-    </div>
+          <button type="submit" name="session" class="btn btn-primary">SignIn</button>
+          </form>
+        </div>
+    {% endif %}
+{% endif %}
+
 {% endblock content %}
