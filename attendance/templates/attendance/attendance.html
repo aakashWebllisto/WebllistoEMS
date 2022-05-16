@@ -1,35 +1,50 @@
-{% extends "attendance/base.html" %}
+{% extends "users/base.html" %}
 
-{% if user.is_authenticated %}
-    <p>Welcome to the attendance page</p>
-{% else %}
-  <p>Please login</p>
-{% endif %}
+
+
 
 
 {% block content %}
-<!--{{user}}-->
-{% if user.is_authenticated %}
-    <p>Welcome to the attendance page</p>
-    {% if signin %}
-        <div class="container">
-          <form method="POST" action="/attendance/signout">
-           {% csrf_token %}
 
-          <button type="submit" name="session" class="btn btn-primary">SignOut</button>
-          </form>
-        </div>
-    {% else %}
-
-
-        <div class="container">
-          <form method="POST" action="/attendance/signin">
-           {% csrf_token %}
-
-          <button type="submit" name="session" class="btn btn-primary">SignIn</button>
-          </form>
-        </div>
-    {% endif %}
+{% if user.is_authenticated or request.user %}
+<p>Welcome to the attendance page</p>
+{% if signin %}
+<form method="POST" action="/attendance/signin">
+    {% csrf_token %}
+    {{form}}
+    <a href="/attendance/signin"><button type="submit"  class="btn btn-primary"/>Signin</button></a>
+    </form>
+{% else %}
+<form method="POST" action="/attendance/signout">
+    {% csrf_token %}
+    {{form}}
+    <a href="/attendance/signout"><button type="submit"  class="btn btn-primary"/>Signout</button></a>
+    </form>
+{% endif %}
+{% else %}
+<p>Please login</p>
 {% endif %}
 
 {% endblock content %}
+
+
+
+<!--    {% if signin %}-->
+<!--        <div class="container">-->
+<!--          <form method="POST" action="">-->
+<!--           {% csrf_token %}-->
+
+<!--          <a href="/attendance/signout"><button type="button" name="session" class="btn btn-primary">SignOut</button></a>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--    {% else %}-->
+
+
+<!--        <div class="container">-->
+<!--          <form method="POST" action="">-->
+<!--           {% csrf_token %}-->
+
+<!--          <a href="/attendance/signin"><button type="button" name="session" class="btn btn-primary">SignIn</button></a>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--    {% endif %}-->
