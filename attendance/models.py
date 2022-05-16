@@ -16,8 +16,8 @@ class Attendance(models.Model):
     def save(self, *args, **kwargs):
         if self.timestamp_out:
             self.timing_duration = self.timestamp_out - self.timestamp_in
-
-        super(Attendance, self).save(*args, **kwargs)  # Call the "real" save() method.
+        elif self.timestamp_in and not self.timestamp_out:
+            super(Attendance, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 # class Leaves(models.model):
 #     rm_approval = models.BooleanField(default=False)

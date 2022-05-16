@@ -17,7 +17,7 @@ def attendance(request):
         return render(request, 'attendance/attendance.html', {'user': user})
 
 def signin_view(request):
-    user = User.objects.get()
+    user = User.objects.get(email=request.user)
     attendance = Attendance()
     attendance.email= request.user
     attendance.date = datetime.date.today()
