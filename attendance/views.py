@@ -25,12 +25,14 @@ def signin_view(request):
         if form.is_valid():
             # print(form.cleaned_data['location'])
             user = User.objects.get(email=request.user)
-
+            reporting_manager = (User.objects.get(email=request.user).id)
+            print(reporting_manager)
             attendance = Attendance()
             attendance.email = str(request.user)
             attendance.date = str(datetime.date.today())
             attendance.timestamp_in = str(datetime.datetime.now())
             attendance.location = str(form.cleaned_data['location'])
+            # attendance.rm_id = user.reporting_manager_id
             attendance.save()
             # return HttpResponse("Form sent")
             return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
