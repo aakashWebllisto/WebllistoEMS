@@ -1,22 +1,21 @@
-{% extends "users/base.html" %}
+{% extends "attendance/base.html" %}
 
 {% block content %}
 
 {% if user %}
 <p>Welcome to the attendance page</p>
-{{request.user}}
-<!--{{user.reporting_manager.}}-->
+
     {% if not signin %}
     <form method="POST" action="/attendance/signin">
         {% csrf_token %}
         {{form}}
-        <a href="/attendance/signin"><button type="submit"  class="btn btn-primary"/>Signin</button></a>
+        <a href="/attendance/signin">Signin</a>
         </form>
     {% else %}
     <form method="POST" action="/attendance/signout">
         {% csrf_token %}
         {{form}}
-        <a href="/attendance/signout"><button type="submit"  class="btn btn-primary"/>Signout</button></a>
+        <a href="/attendance/signout"><button type="submit"/>Signout</button></a>
         </form>
     {% endif %}
 {% else %}
