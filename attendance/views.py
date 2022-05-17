@@ -1,5 +1,5 @@
 import datetime
-
+from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from users.models import User
@@ -21,7 +21,8 @@ def attendance(request):
         form = SessionForm()
         return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
     else:
-        return HttpResponse('Please login')
+        return redirect('/users/login')
+        # return HttpResponse('Please login')
 
 
 def signin_view(request):
@@ -43,7 +44,7 @@ def signin_view(request):
             attendance.save()
             # return HttpResponse("Form sent")
 
-            # return redirect('attendance:signout_view')
+
             return render(request, 'attendance/signout.html', {'user': user, 'form': form, 'signin': True})
 
 
@@ -53,8 +54,9 @@ def signout_view(request):
         if form.is_valid():
             Attendance.objects.filter(email=request.user, date=datetime.date.today()).update(
                 timestamp_out=str(datetime.datetime.now()), location=str(form.cleaned_data['location']))
-            # Attendance.objects.filter(email=request.user, date=datetime.date.today()).update(timing_duration='timestamp_out'-'timestamp_in')
+            Attendance.objects.filter(email=request.user, date=datetime.date.today())\
+                .update(timing_duration=F('timestamp_out')-F('timestamp_in'))
 
-        return HttpResponse('SignOut')
-    return redirect('attendance:attendance')
+        return redirect('/users/home')
+
     # return render(request, 'attendance/attendance.html', {'form': SessionForm()})
