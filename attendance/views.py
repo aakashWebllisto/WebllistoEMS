@@ -22,7 +22,7 @@ def attendance(request):
         return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
     else:
         return redirect('/users/login')
-        # return HttpResponse('Please login')
+
 
 
 def signin_view(request):
@@ -45,7 +45,7 @@ def signin_view(request):
             # return HttpResponse("Form sent")
 
 
-            return render(request, 'attendance/signout.html', {'user': user, 'form': form, 'signin': True})
+            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
 
 
 def signout_view(request):
