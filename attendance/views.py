@@ -29,10 +29,7 @@ def signin_view(request):
     if request.method == 'POST':
         form = SessionForm(request.POST)
         if form.is_valid():
-            # print(form.cleaned_data['location'])
-            # user = User.objects.get(email=request.user)
-            # reporting_manager = (User.objects.get(email=request.user).user_id)
-            # print(reporting_manager)
+
             user = User.objects.get(email=request.user.email)
 
             attendance = Attendance()
@@ -42,7 +39,7 @@ def signin_view(request):
             attendance.location = str(form.cleaned_data['location'])
             attendance.rm = user.reporting_manager.first()
             attendance.save()
-            # return HttpResponse("Form sent")
+
 
 
             return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})

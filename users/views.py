@@ -34,9 +34,11 @@ def Homepage(request):
         print(form.errors.as_data())  
         return render(request,'users/home.html',{'form':UserForm()})
             
+    # else:
+    #     form = UserForm()
+    #     return render(request,'users/home.html',{'form':form})
     else:
-        form = UserForm()
-        return render(request,'users/home.html',{'form':form})
+        return redirect('/users/login')
 
 
 
