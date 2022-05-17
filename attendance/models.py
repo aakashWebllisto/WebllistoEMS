@@ -19,13 +19,13 @@ class Attendance(models.Model):
     timestamp_in = models.DateTimeField(default=datetime.time(),blank=False, null=False)
     timestamp_out = models.DateTimeField(blank=True, null=True)
     timing_duration = models.CharField(max_length=200, blank=True, null=True)
-    rm = models.OneToOneField(User, on_delete=models.CASCADE)
+    rm = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=20, choices=LOCALE_CHOICES, default='office')
 
     def save(self, *args, **kwargs):
         if self.timestamp_out:
             self.timing_duration = self.timestamp_out - self.timestamp_in
-            super(Attendance, self).save(*args, **kwargs)
+            super(Attendance, self).save(update_fields=[self.timing_duration],*args, **kwargs)
         else:
             super(Attendance, self).save(*args, **kwargs)  # Call the "real" save() method.
 

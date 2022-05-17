@@ -1,10 +1,11 @@
 import datetime
 
 from django.http import HttpResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from users.models import User
 from .models import Attendance
 from .forms import SessionForm
+
 
 # Create your views here.
 
@@ -18,10 +19,9 @@ def attendance(request):
         #     print(e)
         # rm = User.objects.get(reporting_manager=user)
         form = SessionForm()
-        return render(request, 'attendance/attendance.html', {'user': user,'form':form ,'signin':False})
+        return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
     else:
         return HttpResponse('Please login')
-
 
 
 def signin_view(request):
@@ -51,14 +51,10 @@ def signout_view(request):
     if request.method == 'POST':
         form = SessionForm(request.POST)
         if form.is_valid():
-            # print(form.cleaned_data['location'])
-            attendance = Attendance.objects.filter(email=request.user,date = datetime.date.today()).update(timestamp_out = str(datetime.datetime.now()),location = str(form.cleaned_data['location']))
-            # attendance.timestamp_out = datetime.time()
-            # attendance.location = str(form.cleaned_data['location'])
-            # attendance.save()
-            # return HttpResponse("Form sent")
-            # return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
+            Attendance.objects.filter(email=request.user, date=datetime.date.today()).update(
+                timestamp_out=str(datetime.datetime.now()), location=str(form.cleaned_data['location']))
+            # Attendance.objects.filter(email=request.user, date=datetime.date.today()).update(timing_duration='timestamp_out'-'timestamp_in')
+
         return HttpResponse('SignOut')
-
-    return render(request,'attendance/signout.html',{'form':SessionForm()})
-
+    return redirect('attendance:attendance')
+    # return render(request, 'attendance/attendance.html', {'form': SessionForm()})
