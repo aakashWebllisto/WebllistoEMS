@@ -10,13 +10,16 @@ from .forms import SessionForm
 
 
 def attendance(request):
-    if request.user:
-
-        user = User.objects.filter(email=request.user)
-
+    if request.user.is_authenticated:
+        user = User.objects.get(email=request.user.email)
+        print(user.reporting_manager.all())
+        print(user)
         # rm = User.objects.get(reporting_manager=user)
         form = SessionForm()
         return render(request, 'attendance/attendance.html', {'user': user,'form':form ,'signin':False})
+    else:
+        return HttpResponse('Please login')
+
 
 
 def signin_view(request):
@@ -24,9 +27,9 @@ def signin_view(request):
         form = SessionForm(request.POST)
         if form.is_valid():
             # print(form.cleaned_data['location'])
-            user = User.objects.get(email=request.user)
-            reporting_manager = (User.objects.get(email=request.user).id)
-            print(reporting_manager)
+            # user = User.objects.get(email=request.user)
+            # reporting_manager = (User.objects.get(email=request.user).user_id)
+            # print(reporting_manager)
             attendance = Attendance()
             attendance.email = str(request.user)
             attendance.date = str(datetime.date.today())

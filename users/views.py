@@ -1,6 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from .forms import UserForm,LoginForm
+from .models import User
 from django.conf  import settings 
 from django.core.mail import send_mail,EmailMultiAlternatives
 from django.contrib.auth import authenticate, login
@@ -16,6 +17,8 @@ def Homepage(request):
         form = UserForm(request.POST, request.FILES)
 
         if form.is_valid():
+            # rm = User.objects.get(email=request.reporting_manager)
+            # form.cleaned_data['reporting_manager'] = rm
             form2 = form.save()
             form2.set_password(form.cleaned_data['password'])
             form2.save()

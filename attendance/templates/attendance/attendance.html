@@ -6,21 +6,23 @@
 
 {% block content %}
 
-{% if user.is_authenticated or request.user %}
+{% if user %}
 <p>Welcome to the attendance page</p>
-{% if not signin %}
-<form method="POST" action="/attendance/signin">
-    {% csrf_token %}
-    {{form}}
-    <a href="/attendance/signin"><button type="submit"  class="btn btn-primary"/>Signin</button></a>
-    </form>
-{% else %}
-<form method="POST" action="/attendance/signout">
-    {% csrf_token %}
-    {{form}}
-    <a href="/attendance/signout"><button type="submit"  class="btn btn-primary"/>Signout</button></a>
-    </form>
-{% endif %}
+{{request.user}}
+<!--{{user.reporting_manager.}}-->
+    {% if not signin %}
+    <form method="POST" action="/attendance/signin">
+        {% csrf_token %}
+        {{form}}
+        <a href="/attendance/signin"><button type="submit"  class="btn btn-primary"/>Signin</button></a>
+        </form>
+    {% else %}
+    <form method="POST" action="/attendance/signout">
+        {% csrf_token %}
+        {{form}}
+        <a href="/attendance/signout"><button type="submit"  class="btn btn-primary"/>Signout</button></a>
+        </form>
+    {% endif %}
 {% else %}
 <p>Please login</p>
 {% endif %}
