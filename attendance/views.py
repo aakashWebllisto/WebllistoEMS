@@ -1,7 +1,7 @@
 import datetime
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from users.models import User
 from .models import Attendance
 from .forms import SessionForm
@@ -42,7 +42,9 @@ def signin_view(request):
             attendance.rm = user.reporting_manager.first()
             attendance.save()
             # return HttpResponse("Form sent")
-            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
+
+            # return redirect('attendance:signout_view')
+            return render(request, 'attendance/signout.html', {'user': user, 'form': form, 'signin': True})
 
 
 def signout_view(request):
@@ -56,4 +58,7 @@ def signout_view(request):
             # attendance.save()
             # return HttpResponse("Form sent")
             # return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
-    return HttpResponse('SignOut')
+        return HttpResponse('SignOut')
+
+    return render(request,'attendance/signout.html',{'form':SessionForm()})
+
