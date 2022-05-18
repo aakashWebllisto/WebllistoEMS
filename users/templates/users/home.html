@@ -2,7 +2,7 @@
 
   {% block content %}
 
-  {% if user.is_authenticated and user.email == 'aakash1avp@yahoo.com'%}
+  {% if request.user.email == 'aakash1avp@yahoo.com'%}
       <div class="container">
         <form method="POST" action="" enctype= "multipart/form-data">
           {% csrf_token %}
@@ -48,7 +48,7 @@
       </div>
 
 
-{% elif user.is_authenticated and user.email != 'aakash1avp@yahoo.com'%}
+{% elif request.user.email and request.user.email != 'aakash1avp@yahoo.com'%}
     <p>Welcome, User.You are now logged in </p>
 {% else %}
   <p>Please login</p>
