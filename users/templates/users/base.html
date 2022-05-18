@@ -174,19 +174,11 @@ input[type="checkbox"]:checked + .label-text:before {
                 <a class="nav-link active" aria-current="page" href="/attendance/leaves">Leaves</a>
               </li>
             </ul>
-<!--              {% if user.is_authenticated %}-->
-<!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="logout">Logout</a>-->
-<!--              </li>-->
-<!--              {% else %}-->
-<!--              <li class="nav-item">-->
-<!--                <a class="nav-link" href="login">Login</a>-->
-<!--              </li>-->
-<!--              {% endif %}-->
+
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item ms-auto d-flex" >
                 <a  href="/users/{% if user.is_authenticated %}logout{% else %}login{% endif %}"><img src="{% static 'users/icons8-signin-64.png' %}"
-                                     width=50 height=50/></a>
+                                     width=35 height=35/></a>
                 </li>
                 </ul>
             </ul>

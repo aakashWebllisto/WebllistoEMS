@@ -102,6 +102,11 @@ def apply_leaves(request):
 
         else:     # For GET request method
             form = ApplyLeavesForm()
+            # unique_rm = User.objects.order_by('reporting_manager')#.values('reporting_manager').distinct()
+            # print(unique_rm)
+            # is_rm = False
+            # if request.user.email in unique_rm:
+            #     is_rm = True
             return render(request,'attendance/leaves.html',{'form':form})
 
     else:
