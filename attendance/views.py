@@ -79,7 +79,8 @@ def apply_leaves(request):
                 model_obj.to_session = form2.cleaned_data.get('to_session')
                 model_obj.cc_to = form2.cleaned_data.get('cc_to')
                 model_obj.contact_details = form2.cleaned_data.get('contact_details')
-                model_obj.reasons = form2.cleaned_data.get('reasons')
+                model_obj.reason = form2.cleaned_data.get('reason')
+                model_obj.leaves_taken = (form2.cleaned_data.get('to_date')-form2.cleaned_data.get('from_date')).days
                 model_obj.save()
 
 
@@ -87,20 +88,21 @@ def apply_leaves(request):
                 subject = "Webllisto EMS Leave Application"
                 from_email = settings.EMAIL_HOST_USER
                 to = form2.cleaned_data['applying_to']
-                cc_to = form2.cleaned_data['cc_to']
+                cc_to = [form2.cleaned_data['cc_to'],user.reporting_manager.first()]
                 text_content = 'You have applied for leave at Webllisto'
                 html_content = '<p><strong>Leaves Applied</strong> for <strong>'+str(form2.cleaned_data['from_date'])+' to '+str(form2.cleaned_data['to_date'])+'</strong></p>'
-                msg = EmailMultiAlternatives(subject, text_content, from_email, [to],cc=[cc_to])
+                msg = EmailMultiAlternatives(subject, text_content, from_email, [to],cc=cc_to)
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
 
-                return HttpResponse('Leave Applied')
+                return render(request,'attendance/leave_applied_success.html',{'msg':'Leave applied successfully'})
 
             else:
                 return HttpResponse('Form invalid')
 
         else:     # For GET request method
-            return render(request,'attendance/leaves.html',{'form':form})
+            form = ApplyLeavesForm()
+            return render(request,'attendance/leaves.html',{'form':form,'sum':sum})
 
     else:
         return redirect('/users/home')

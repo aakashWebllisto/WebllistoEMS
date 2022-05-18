@@ -3,7 +3,13 @@
 {% block content %}
 
 {% if user %}
-<p>Welcome to the Leaves page</p>
+<p><strong>Welcome to the Leaves page</strong></p>
+<div class="sidebar">
+  <a href="#total">Total:10</a>
+<!--  <a href="#exhausted">Exhausted:{{sum}}</a>-->
+
+</div>
+<div class="container">
 
     <form method="POST" action="/attendance/apply_leaves">
         {% csrf_token %}
@@ -37,7 +43,7 @@
 
         <a href="/attendance/apply_leaves"><button type="submit"/>Apply</button></a>
     </form>
-
+</div>
 {% else %}
 <p>Please login</p>
 {% endif %}
