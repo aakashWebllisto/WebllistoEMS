@@ -24,9 +24,7 @@ class Attendance(models.Model):
 
 
 
-    # @property
-    # def timing_duration(self):
-    #     return self.timestamp_out - self.timestamp_in
+
 
     def save(self, *args, **kwargs):
         if self.timestamp_out:
@@ -38,9 +36,30 @@ class Attendance(models.Model):
     def __str__(self):
         return (self.email + ":" + str(self.date))
 
-# class Leaves(models.model):
-#     rm_approval = models.BooleanField(default=False)
-#     leave_application = models.BooleanField(default=False)
-#     leave_application_approval = models.BooleanField(default=False)  # initial pending
-#     # reason,mail to hr, cc to rm,to user as well
-#     timing_duration = models.TimeField()
+
+LEAVE_CHOICES = (
+    ('loss of pay', 'LOSS OF PAY'),
+    ('comp - off', 'COMP - OFF'),
+)
+SESSION_CHOICES = (
+    ('session1', 'SESSION1'),
+    ('session2', 'SESSION2'),
+)
+class Leaves(models.Model):
+    leave_type = models.CharField(max_length=20, choices=LEAVE_CHOICES, default='loss of pay')
+    from_date = models.DateTimeField(default=datetime.date.today(),null=False,blank=False)
+    to_date = models.DateTimeField(null=False,blank=False)
+    from_session = models.CharField(max_length=20, choices=SESSION_CHOICES, default='session1')
+    to_session = models.CharField(max_length=20, choices=SESSION_CHOICES, default='session2')
+    applying_to = models.ForeignKey(User,on_delete=models.CASCADE)
+    cc_to = models.EmailField()# reason,mail to hr, cc to rm,to user as well
+    contact_details = models.CharField(max_length=200,blank=False,null=False)
+    reason = models.CharField(max_length=200,blank=False,null=False)
+    total_leaves = models.IntegerField(default=10,blank=True,null=True)
+    leaves_taken = models.IntegerField(blank=True,null=True)
+
+
+
+
+
+

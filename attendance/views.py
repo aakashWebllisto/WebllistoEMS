@@ -24,12 +24,10 @@ def attendance(request):
         return redirect('/users/login')
 
 
-
 def signin_view(request):
     if request.method == 'POST':
         form = SessionForm(request.POST)
         if form.is_valid():
-
             user = User.objects.get(email=request.user.email)
 
             attendance = Attendance()
@@ -40,8 +38,6 @@ def signin_view(request):
             attendance.rm = user.reporting_manager.first()
             attendance.save()
 
-
-
             return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
 
 
@@ -51,9 +47,13 @@ def signout_view(request):
         if form.is_valid():
             Attendance.objects.filter(email=request.user, date=datetime.date.today()).update(
                 timestamp_out=str(datetime.datetime.now()), location=str(form.cleaned_data['location']))
-            Attendance.objects.filter(email=request.user, date=datetime.date.today())\
-                .update(timing_duration=F('timestamp_out')-F('timestamp_in'))
+            Attendance.objects.filter(email=request.user, date=datetime.date.today()) \
+                .update(timing_duration=F('timestamp_out') - F('timestamp_in'))
 
         return redirect('/users/home')
 
     # return render(request, 'attendance/attendance.html', {'form': SessionForm()})
+
+
+def leaves(request):
+    pass
