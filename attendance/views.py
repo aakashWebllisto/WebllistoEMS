@@ -3,7 +3,7 @@ from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from users.models import User
-from .models import Attendance,Leaves
+from .models import Attendance,LeaveApplcation
 from .forms import SessionForm, ApplyLeavesForm
 from django.core.mail import send_mail,EmailMultiAlternatives
 from django.conf import settings
@@ -63,13 +63,25 @@ def leaves(request):
 
 def apply_leaves(request):
     if request.user.is_authenticated:
-        model_obj = Leaves(email=request.user.email)
-        form = ApplyLeavesForm(instance=model_obj)
+
         if request.method == 'POST':
+            user = User.objects.get(email=request.user.email)
+            model_obj = LeaveApplcation(email=request.user.email, rm=user.reporting_manager.first())
             form2 = ApplyLeavesForm(request.POST)
+            # form2 = ApplyLeavesForm(request.POST)
             if form2.is_valid():
                 # form.cleaned_data['email'] = request.user.email
-                form2.save()
+                model_obj.applying_to = form2.cleaned_data.get('applying_to')
+                model_obj.leave_type = form2.cleaned_data.get('leave_type')
+                model_obj.from_date = form2.cleaned_data.get('from_date')
+                model_obj.to_date = form2.cleaned_data.get('to_date')
+                model_obj.from_session = form2.cleaned_data.get('from_session')
+                model_obj.to_session = form2.cleaned_data.get('to_session')
+                model_obj.cc_to = form2.cleaned_data.get('cc_to')
+                model_obj.contact_details = form2.cleaned_data.get('contact_details')
+                model_obj.reasons = form2.cleaned_data.get('reasons')
+                model_obj.save()
+
 
                 # Send respective mails
                 subject = "Webllisto EMS Leave Application"
@@ -83,6 +95,9 @@ def apply_leaves(request):
                 msg.send()
 
                 return HttpResponse('Leave Applied')
+
+            else:
+                return HttpResponse('Form invalid')
 
         else:     # For GET request method
             return render(request,'attendance/leaves.html',{'form':form})

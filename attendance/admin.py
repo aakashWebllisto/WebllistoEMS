@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Attendance,Leaves
+from .models import Attendance,LeaveApplcation
 # Register your models here.
 admin.site.register(Attendance)
-admin.site.register(Leaves)
+admin.site.register(LeaveApplcation)
