@@ -80,7 +80,7 @@ def apply_leaves(request):
                 model_obj.cc_to = form2.cleaned_data.get('cc_to')
                 model_obj.contact_details = form2.cleaned_data.get('contact_details')
                 model_obj.reason = form2.cleaned_data.get('reason')
-                model_obj.leaves_taken = (form2.cleaned_data.get('to_date')-form2.cleaned_data.get('from_date')).days
+                model_obj.leaves_taken = (form2.cleaned_data.get('to_date')-form2.cleaned_data.get('from_date')).days+1
                 model_obj.save()
 
 
@@ -102,7 +102,7 @@ def apply_leaves(request):
 
         else:     # For GET request method
             form = ApplyLeavesForm()
-            return render(request,'attendance/leaves.html',{'form':form,'sum':sum})
+            return render(request,'attendance/leaves.html',{'form':form})
 
     else:
         return redirect('/users/home')
