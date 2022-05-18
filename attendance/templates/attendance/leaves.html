@@ -1,0 +1,43 @@
+{% extends "attendance/base.html" %}
+
+{% block content %}
+
+{% if user %}
+<p>Welcome to the Leaves page</p>
+
+    <form method="POST" action="/attendance/apply_leaves">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>{{form.leave_type.label_tag}}</td><td>{{form.leave_type}}</td>
+            </tr>
+            <tr>
+                <td>{{form.from_date.label_tag}}</td><td>{{form.from_date}}</td><td>{{form.from_session.label_tag}}</td><td>{{form.from_session}}</td>
+            </tr>
+            <tr>
+                <td>{{form.to_date.label_tag}}</td><td>{{form.to_date}}</td><td>{{form.to_session.label_tag}}</td><td>{{form.to_session}}</td>
+            </tr>
+            <tr>
+                <td>{{form.applying_to.label_tag}}</td><td>{{form.applying_to}}</td>
+            </tr>
+            <tr>
+                <td>{{form.cc_to.label_tag}}</td><td>{{form.cc_to}}</td>
+            </tr>
+            <tr>
+                <td>{{form.contact_details.label_tag}}</td><td>{{form.contact_details}}</td>
+            </tr>
+            <tr>
+                <td>{{form.reason.label_tag}}</td><td>{{form.reason}}</td>
+            </tr>
+
+        </table>
+
+        <a href="/attendance/apply_leaves"><button type="submit"/>Apply</button></a>
+    </form>
+
+{% else %}
+<p>Please login</p>
+{% endif %}
+
+{% endblock content %}
+

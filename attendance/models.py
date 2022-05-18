@@ -54,7 +54,7 @@ class Leaves(models.Model):
     applying_to = models.ForeignKey(User,on_delete=models.CASCADE)
     cc_to = models.EmailField()# reason,mail to hr, cc to rm,to user as well
     contact_details = models.CharField(max_length=200,blank=False,null=False)
-    reason = models.CharField(max_length=200,blank=False,null=False)
+    reason = models.TextField(blank=False,null=False)
     total_leaves = models.IntegerField(default=10,blank=True,null=True)
     leaves_taken = models.IntegerField(blank=True,null=True)
 

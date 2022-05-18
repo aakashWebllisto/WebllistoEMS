@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from users.models import User
 from .models import Attendance
-from .forms import SessionForm
+from .forms import SessionForm,ApplyLeavesForm
 
 
 # Create your views here.
@@ -13,11 +13,6 @@ from .forms import SessionForm
 def attendance(request):
     if request.user.is_authenticated:
         user = User.objects.get(email=request.user.email)
-        print((user.reporting_manager.all()))
-        print(user)
-        # for e in user.reporting_manager.all():
-        #     print(e)
-        # rm = User.objects.get(reporting_manager=user)
         form = SessionForm()
         return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
     else:
@@ -56,4 +51,9 @@ def signout_view(request):
 
 
 def leaves(request):
-    pass
+    if request.user.is_authenticated:
+        user = User.objects.get(email=request.user.email)
+        form = ApplyLeavesForm()
+        return render(request, 'attendance/leaves.html', {'user': user, 'form': form})
+    else:
+        return redirect('/users/login')
