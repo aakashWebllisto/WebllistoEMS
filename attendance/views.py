@@ -114,5 +114,10 @@ def apply_leaves(request):
 
 
 def approve_leaves(request):
-    return HttpResponse('Approve Leaves here')
+    user = User.objects.filter(reporting_manager=User.objects.get(email=request.user.email)).first()
+    leaves_applied = LeaveApplcation.objects.filter(email=user).first()
+    if leaves_applied:
+        LeaveApplcation.objects.filter(email=user).update()
+    print(leaves_applied)
+    return render(request,'attendance/approve_leaves.html')
 

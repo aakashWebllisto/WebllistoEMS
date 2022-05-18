@@ -58,6 +58,7 @@ class LeaveApplcation(models.Model):
     total_leaves = models.IntegerField(default=10, blank=True, null=True)
     leaves_taken = models.IntegerField(blank=True, null=True)
     rm = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rm_leave_user', null=True)
+    rm_approval = models.BooleanField(default=False)
 
     def __str__(self):
         return (self.email + ":" + str(self.applying_to))
