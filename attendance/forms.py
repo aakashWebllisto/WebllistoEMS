@@ -13,4 +13,4 @@ class ApplyLeavesForm(forms.ModelForm):
     to_date = forms.DateField(widget=forms.SelectDateWidget)
     class Meta:
         model = Leaves
-        fields = ['leave_type','from_date','to_date','from_session','to_session','applying_to','cc_to','contact_details','reason']
+        fields = ['email','leave_type','from_date','to_date','from_session','to_session','applying_to','cc_to','contact_details','reason']

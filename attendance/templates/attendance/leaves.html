@@ -9,6 +9,9 @@
         {% csrf_token %}
         <table>
             <tr>
+                <td>{{form.email.label_tag}}</td><td>{{form.email}}</td>
+            </tr>
+            <tr>
                 <td>{{form.leave_type.label_tag}}</td><td>{{form.leave_type}}</td>
             </tr>
             <tr>

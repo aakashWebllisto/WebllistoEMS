@@ -3,8 +3,10 @@ from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from users.models import User
-from .models import Attendance
-from .forms import SessionForm,ApplyLeavesForm
+from .models import Attendance,Leaves
+from .forms import SessionForm, ApplyLeavesForm
+from django.core.mail import send_mail,EmailMultiAlternatives
+from django.conf import settings
 
 
 # Create your views here.
@@ -52,8 +54,39 @@ def signout_view(request):
 
 def leaves(request):
     if request.user.is_authenticated:
-        user = User.objects.get(email=request.user.email)
+        # user = User.objects.get(email=request.user.email)
         form = ApplyLeavesForm()
-        return render(request, 'attendance/leaves.html', {'user': user, 'form': form})
+        return render(request, 'attendance/leaves.html', {'form': form})
     else:
         return redirect('/users/login')
+
+
+def apply_leaves(request):
+    if request.user.is_authenticated:
+        model_obj = Leaves(email=request.user.email)
+        form = ApplyLeavesForm(instance=model_obj)
+        if request.method == 'POST':
+            form2 = ApplyLeavesForm(request.POST)
+            if form2.is_valid():
+                # form.cleaned_data['email'] = request.user.email
+                form2.save()
+
+                # Send respective mails
+                subject = "Webllisto EMS Leave Application"
+                from_email = settings.EMAIL_HOST_USER
+                to = form2.cleaned_data['applying_to']
+                cc_to = form2.cleaned_data['cc_to']
+                text_content = 'You have applied for leave at Webllisto'
+                html_content = '<p><strong>Leaves Applied</strong> for <strong>'+str(form2.cleaned_data['from_date'])+' to '+str(form2.cleaned_data['to_date'])+'</strong></p>'
+                msg = EmailMultiAlternatives(subject, text_content, from_email, [to],cc=[cc_to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+
+                return HttpResponse('Leave Applied')
+
+        else:     # For GET request method
+            return render(request,'attendance/leaves.html',{'form':form})
+
+    else:
+        return redirect('/users/home')
+

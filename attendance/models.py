@@ -46,6 +46,7 @@ SESSION_CHOICES = (
     ('session2', 'SESSION2'),
 )
 class Leaves(models.Model):
+    email = models.EmailField(blank=True, null=True)
     leave_type = models.CharField(max_length=20, choices=LEAVE_CHOICES, default='loss of pay')
     from_date = models.DateTimeField(default=datetime.date.today(),null=False,blank=False)
     to_date = models.DateTimeField(null=False,blank=False)
@@ -58,6 +59,16 @@ class Leaves(models.Model):
     total_leaves = models.IntegerField(default=10,blank=True,null=True)
     leaves_taken = models.IntegerField(blank=True,null=True)
 
+    def __str__(self):
+        return (self.email + ":" + str(self.applying_to ))
+
+    # def save(self, *args, **kwargs):
+    #     if self.timestamp_out:
+    #         self.timing_duration = self.timestamp_out - self.timestamp_in
+    #         super(Attendance, self).save(*args, **kwargs)
+    #     else:
+    #         super(Attendance, self).save(*args, **kwargs)  # Call the "real" save() method.
+    #
 
 
 
