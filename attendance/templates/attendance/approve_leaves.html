@@ -2,6 +2,10 @@
 
 {% block content %}
 
+<form method="POST" action="/attendance/approve_leaves">
+    {% csrf_token %}
+    <button type="submit">Approve</button>
+</form>
 
 
 

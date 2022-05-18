@@ -10,5 +10,6 @@ urlpatterns = [
     path("attendance/leaves", views.leaves),
     path("attendance/apply_leaves", views.apply_leaves),
     path("attendance/approve_leaves", views.approve_leaves),
+    # path("/attendance/leave_approved", views.leave_approved),
 
 ]

@@ -116,8 +116,10 @@ def apply_leaves(request):
 def approve_leaves(request):
     user = User.objects.filter(reporting_manager=User.objects.get(email=request.user.email)).first()
     leaves_applied = LeaveApplcation.objects.filter(email=user).first()
-    if leaves_applied:
-        LeaveApplcation.objects.filter(email=user).update()
-    print(leaves_applied)
-    return render(request,'attendance/approve_leaves.html')
+    if request.method == 'POST':
+        if leaves_applied:
+            LeaveApplcation.objects.filter(email=user).update(rm_approval=True)
+            return render(request,"attendance/leave_approved_success.html", {'msg': 'Leave Approved'})
+
+    return render(request,'attendance/approve_leaves.html',{'leaves_applied':leaves_applied})
 
