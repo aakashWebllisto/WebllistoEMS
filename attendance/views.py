@@ -112,3 +112,7 @@ def apply_leaves(request):
     else:
         return redirect('/users/home')
 
+
+def approve_leaves(request):
+    return HttpResponse('Approve Leaves here')
+

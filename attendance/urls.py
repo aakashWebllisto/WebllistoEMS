@@ -9,5 +9,6 @@ urlpatterns = [
     path("attendance/signout", views.signout_view),
     path("attendance/leaves", views.leaves),
     path("attendance/apply_leaves", views.apply_leaves),
+    path("attendance/approve_leaves", views.approve_leaves),
 
 ]
