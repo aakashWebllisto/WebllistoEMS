@@ -55,8 +55,25 @@ def signout_view(request):
 def leaves(request):
     if request.user.is_authenticated:
         # user = User.objects.get(email=request.user.email)
+        user_with_rm_login = User.objects.filter(reporting_manager=User.objects.get(email=request.user.email)).first()
+        user_with_leaves = LeaveApplcation.objects.filter(email=user_with_rm_login,rm_approval=False).first()
+        user_with_leaves_applied = LeaveApplcation.objects.filter(email=request.user.email,rm_approval=False).first()
         form = ApplyLeavesForm()
-        return render(request, 'attendance/leaves.html', {'form': form})
+        unapproved_leaves = None
+        leaves_applied = None
+        if user_with_leaves_applied:
+            leaves_applied = True
+        else:
+            leaves_applied = False
+
+        if user_with_leaves:
+            unapproved_leaves = True
+        else:
+            unapproved_leaves = False
+        return render(request, 'attendance/leaves.html',
+                          {'form': form, 'unapproved_leaves': unapproved_leaves, 'leaves_applied_for': leaves_applied})
+
+
     else:
         return redirect('/users/login')
 
@@ -65,6 +82,7 @@ def apply_leaves(request):
     if request.user.is_authenticated:
 
         if request.method == 'POST':
+
             user = User.objects.get(email=request.user.email)
             model_obj = LeaveApplcation(email=request.user.email, rm=user.reporting_manager.first())
             form2 = ApplyLeavesForm(request.POST)
@@ -114,12 +132,18 @@ def apply_leaves(request):
 
 
 def approve_leaves(request):
-    user = User.objects.filter(reporting_manager=User.objects.get(email=request.user.email)).first()
-    leaves_applied = LeaveApplcation.objects.filter(email=user).first()
-    if request.method == 'POST':
-        if leaves_applied:
-            LeaveApplcation.objects.filter(email=user).update(rm_approval=True)
-            return render(request,"attendance/leave_approved_success.html", {'msg': 'Leave Approved'})
+    if request.method == "POST":
+        user = User.objects.filter(reporting_manager=User.objects.get(email=request.user.email)).first()
+        leaves_applied = LeaveApplcation.objects.filter(email=user).first()
+        if request.method == 'POST':
+            if leaves_applied:
+                LeaveApplcation.objects.filter(email=user).update(rm_approval=True)
+                return render(request,"attendance/leave_approved_success.html", {'msg': 'Leave Approved'})
+            else:
+                return HttpResponse('You are not RM')
 
-    return render(request,'attendance/approve_leaves.html',{'leaves_applied':leaves_applied})
+    else:
+        return render(request,'attendance/approve_leaves.html')
+
+
 
