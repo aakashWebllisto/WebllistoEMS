@@ -14,10 +14,6 @@ from django.conf import settings
 
 def attendance(request):
     if request.user.is_authenticated:
-        # user = User.objects.get(email=request.user.email)
-        # form = SessionForm()
-        # return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
-
         form = SessionForm()
         user = User.objects.get(email=request.user.email)
         at = Attendance.objects.filter(email=request.user.email,signin=True).first()
