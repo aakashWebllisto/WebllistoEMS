@@ -46,16 +46,7 @@ def signin_view(request):
             attendance.save()
 
             return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
-    #     For GET request
-    # else:
-    #     form = SessionForm()
-    #     user = User.objects.get(email=request.user.email)
-    #     at = Attendance.objects.filter(email=request.user.email,signin=True).first()
-    #     print(at)
-    #     if at:
-    #         return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
-    #     else:
-    #         return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
+
 
 
 def signout_view(request):
@@ -69,7 +60,7 @@ def signout_view(request):
 
         return redirect('/users/home')
 
-    # return render(request, 'attendance/attendance.html', {'form': SessionForm()})
+
 
 
 def leaves(request):
@@ -106,7 +97,7 @@ def apply_leaves(request):
             user = User.objects.get(email=request.user.email)
             model_obj = LeaveApplcation(email=request.user.email, rm=user.reporting_manager.first())
             form2 = ApplyLeavesForm(request.POST)
-            # form2 = ApplyLeavesForm(request.POST)
+
             if form2.is_valid():
 
                 if form2.cleaned_data.get('to_date') < form2.cleaned_data.get('from_date'):
@@ -142,11 +133,7 @@ def apply_leaves(request):
 
         else:     # For GET request method
             form = ApplyLeavesForm()
-            # unique_rm = User.objects.order_by('reporting_manager')#.values('reporting_manager').distinct()
-            # print(unique_rm)
-            # is_rm = False
-            # if request.user.email in unique_rm:
-            #     is_rm = True
+
             return render(request,'attendance/leaves.html',{'form':form})
 
     else:
