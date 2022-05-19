@@ -22,6 +22,7 @@ class Attendance(models.Model):
     timing_duration = models.CharField(max_length=200, blank=True, null=True)
     rm = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=20, choices=LOCALE_CHOICES, default='office')
+    signin = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if self.timestamp_out:

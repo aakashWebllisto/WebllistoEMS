@@ -14,9 +14,18 @@ from django.conf import settings
 
 def attendance(request):
     if request.user.is_authenticated:
-        user = User.objects.get(email=request.user.email)
+        # user = User.objects.get(email=request.user.email)
+        # form = SessionForm()
+        # return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
+
         form = SessionForm()
-        return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
+        user = User.objects.get(email=request.user.email)
+        at = Attendance.objects.filter(email=request.user.email,signin=True).first()
+        print(at)
+        if at:
+            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
+        else:
+            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
     else:
         return redirect('/users/login')
 
@@ -33,9 +42,20 @@ def signin_view(request):
             attendance.timestamp_in = str(datetime.datetime.now())
             attendance.location = str(form.cleaned_data['location'])
             attendance.rm = user.reporting_manager.first()
+            attendance.signin = True
             attendance.save()
 
             return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
+    #     For GET request
+    # else:
+    #     form = SessionForm()
+    #     user = User.objects.get(email=request.user.email)
+    #     at = Attendance.objects.filter(email=request.user.email,signin=True).first()
+    #     print(at)
+    #     if at:
+    #         return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
+    #     else:
+    #         return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
 
 
 def signout_view(request):
@@ -43,7 +63,7 @@ def signout_view(request):
         form = SessionForm(request.POST)
         if form.is_valid():
             Attendance.objects.filter(email=request.user, date=datetime.date.today()).update(
-                timestamp_out=str(datetime.datetime.now()), location=str(form.cleaned_data['location']))
+                timestamp_out=str(datetime.datetime.now()), location=str(form.cleaned_data['location']),signin=False)
             Attendance.objects.filter(email=request.user, date=datetime.date.today()) \
                 .update(timing_duration=F('timestamp_out') - F('timestamp_in'))
 
