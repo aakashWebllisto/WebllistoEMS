@@ -16,12 +16,14 @@ def attendance(request):
     if request.user.is_authenticated:
         form = SessionForm()
         user = User.objects.get(email=request.user.email)
-        at = Attendance.objects.filter(email=request.user.email,signin=True).first()
-        print(at)
+        at = Attendance.objects.filter(email=request.user.email,signin=True,date=datetime.date.today()).first()
+        swipes = Attendance.objects.filter(email=request.user.email,date=datetime.date.today())
+
+
         if at:
-            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True})
+            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': True,'swipes':swipes})
         else:
-            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False})
+            return render(request, 'attendance/attendance.html', {'user': user, 'form': form, 'signin': False,'swipes':swipes})
     else:
         return redirect('/users/login')
 
@@ -49,7 +51,7 @@ def signout_view(request):
     if request.method == 'POST':
         form = SessionForm(request.POST)
         if form.is_valid():
-            Attendance.objects.filter(email=request.user, date=datetime.date.today()).update(
+            Attendance.objects.filter(email=request.user, date=datetime.date.today(),timestamp_out__isnull=True).update(
                 timestamp_out=str(datetime.datetime.now()), location=str(form.cleaned_data['location']),signin=False)
             Attendance.objects.filter(email=request.user, date=datetime.date.today()) \
                 .update(timing_duration=F('timestamp_out') - F('timestamp_in'))

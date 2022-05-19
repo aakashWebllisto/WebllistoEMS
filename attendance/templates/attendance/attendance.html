@@ -4,7 +4,13 @@
 
 {% if user %}
 <p>Welcome to the attendance page</p>
-
+<h2>Swipes:</h2>
+<table border="1">
+    <th>Time-In</th><th>Time-Out</th>
+        {% for swipe in swipes %}
+        <tr><td>{{swipe.timestamp_in}}</td><td>{{swipe.timestamp_out}}</td></tr>
+        {% endfor %}
+</table>
     {% if not signin %}
     <form method="POST" action="/attendance/signin">
         {% csrf_token %}
