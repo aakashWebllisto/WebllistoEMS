@@ -1,7 +1,9 @@
 {% extends "attendance/base.html" %}
 
 {% block content %}
-
+From_date:{{from_date}}<br/>
+To_date:{{to_date}}<br/>
+Reason:{{reason}}<br/>
 <form method="POST" action="/attendance/approve_leaves">
     {% csrf_token %}
     <button type="submit">Approve</button>

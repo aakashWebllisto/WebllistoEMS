@@ -106,7 +106,7 @@ def apply_leaves(request):
                 subject = "Webllisto EMS Leave Application"
                 from_email = settings.EMAIL_HOST_USER
                 to = form2.cleaned_data['applying_to']
-                cc_to = [form2.cleaned_data['cc_to'],user.reporting_manager.first()]
+                cc_to = [form2.cleaned_data['cc_to'],user.reporting_manager.first(),request.user.email]
                 text_content = 'You have applied for leave at Webllisto'
                 html_content = '<p><strong>Leaves Applied</strong> for <strong>'+str(form2.cleaned_data['from_date'])+' to '+str(form2.cleaned_data['to_date'])+'</strong></p>'
                 msg = EmailMultiAlternatives(subject, text_content, from_email, [to],cc=cc_to)
@@ -132,18 +132,26 @@ def apply_leaves(request):
 
 
 def approve_leaves(request):
+    # With the rm login, get the employee object
+    user = User.objects.filter(reporting_manager=User.objects.get(email=request.user.email)).first()
+    # check if the above object has applied for leaves or not
+    leaves_applied = LeaveApplcation.objects.filter(email=user).first()
+
     if request.method == "POST":
-        user = User.objects.filter(reporting_manager=User.objects.get(email=request.user.email)).first()
-        leaves_applied = LeaveApplcation.objects.filter(email=user).first()
+
         if request.method == 'POST':
             if leaves_applied:
+                # update the leave application by RM's approval
                 LeaveApplcation.objects.filter(email=user).update(rm_approval=True)
                 return render(request,"attendance/leave_approved_success.html", {'msg': 'Leave Approved'})
             else:
                 return HttpResponse('You are not RM')
 
     else:
-        return render(request,'attendance/approve_leaves.html')
+        from_date = leaves_applied.from_date
+        to_date = leaves_applied.to_date
+        reason = leaves_applied.reason
+        return render(request,'attendance/approve_leaves.html',{'from_date':from_date,'to_date':to_date,'reason':reason})
 
 
 
