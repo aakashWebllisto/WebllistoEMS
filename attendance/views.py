@@ -88,7 +88,9 @@ def apply_leaves(request):
             form2 = ApplyLeavesForm(request.POST)
             # form2 = ApplyLeavesForm(request.POST)
             if form2.is_valid():
-                # form.cleaned_data['email'] = request.user.email
+
+                if form2.cleaned_data.get('to_date') < form2.cleaned_data.get('from_date'):
+                    return HttpResponse("To date should not be less than From date")
                 model_obj.applying_to = form2.cleaned_data.get('applying_to')
                 model_obj.leave_type = form2.cleaned_data.get('leave_type')
                 model_obj.from_date = form2.cleaned_data.get('from_date')
